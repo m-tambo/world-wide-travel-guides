@@ -7,13 +7,25 @@ angular
             controller: 'bookCtrl',
             templateUrl: "/app/partials/books.html"
          })
+         .otherwise('/')
    })
-   .controller('bookCtrl', function($http, $scope) {
+   .controller('bookCtrl', function($http, $scope, guideFactory) {
       console.log('this is the bookCtrl')
-      $http.get('/data/guides.json')
-            .then ( (response) => {
-               console.log(response)
-               return response
-            })
-
+      guideFactory
+         .getBooks()
+         .then((guides) => {
+            $scope.books = guides
+         })
+   })
+   .factory('guideFactory', function($http) {
+      return {
+         getBooks () {
+            return $http
+               .get('/data/guides.json')
+               .then ( (response) => {
+                  console.log(response.data.guides)
+                  return response.data.guides
+               })
+         }
+      }
    })
