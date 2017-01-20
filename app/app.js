@@ -1,24 +1,19 @@
 angular
    .module('travelGuides', ['ngRoute'])
    .config( function($routeProvider) {
+      console.log('config')
       $routeProvider
          .when('/', {
             controller: 'bookCtrl',
-            templatUrl: "/index.html"
+            templateUrl: "/app/partials/books.html"
          })
    })
    .controller('bookCtrl', function($http, $scope) {
       console.log('this is the bookCtrl')
-      return {
-         getBooks() {
-            return $http
-               .get('/data/guides.json')
-               .then ( (response) => {
-                  console.log(response)
-                  return response
-               })
+      $http.get('/data/guides.json')
+            .then ( (response) => {
+               console.log(response)
+               return response
+            })
 
-
-         }
-      }
    })
