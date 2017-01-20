@@ -1,24 +1,24 @@
 angular
-   .module('travelGuides', [ngRoute])
-   .config( function($routeprovider) {
-      $routeprovider
-         .when('/') {
-            controller: "bookCtrl",
+   .module('travelGuides', ['ngRoute'])
+   .config( function($routeProvider) {
+      $routeProvider
+         .when('/', {
+            controller: 'bookCtrl',
             templatUrl: "/index.html"
-         }
-
+         })
    })
    .controller('bookCtrl', function($http, $scope) {
-
-         function getBooks() {
+      console.log('this is the bookCtrl')
+      return {
+         getBooks() {
             return $http
-               .get(`data/guides.js`)
+               .get('/data/guides.json')
                .then ( (response) => {
                   console.log(response)
-
+                  return response
                })
 
 
          }
-
+      }
    })
